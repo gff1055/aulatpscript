@@ -1,0 +1,62 @@
+
+
+Você está construindo um sistema de registro de eventos. Cada evento será representado por uma tupla que deve conter exatamente três elementos:
+
+O Nome do Evento (uma string).
+
+O Status do Evento (um boolean, onde true significa "Ativo" e false significa "Cancelado").
+
+A Capacidade Máxima de participantes (um number).
+
+
+eventName(string),eventStatus(boolean),maxPartCap(number)
+
+*event()
+
+
+Tarefas
+
+Definir a Tupla: Crie um type alias chamado RegistroEvento que defina a estrutura da tupla (string, boolean, number).
+
+Criar Tuplas: Declare três variáveis usando o tipo RegistroEvento, inicializando-as com dados válidos.
+
+Acessar e Imprimir: Crie uma função chamada exibirDetalhes que aceite uma tupla do tipo RegistroEvento como argumento e imprima o nome do evento,
+seu status (imprimindo "Ativo" ou "Cancelado" em vez de true/false), e sua capacidade.
+
+Teste de Tipo Inválido (Conceitual): Descreva, em um comentário no seu código (ou em texto à parte), o que aconteceria se você tentasse atribuir
+um array com um tipo incorreto ou número de elementos diferente à sua variável RegistroEvento (por exemplo, [123, true, "Palestra"]).
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 1. Defina o type alias da tupla RegistroEvento aqui.
+// type RegistroEvento = ???;
+
+// 2. Crie as três tuplas aqui.
+// const eventoConferencia: RegistroEvento = ???;
+// const eventoWorkshop: RegistroEvento = ???;
+// const eventoCancelado: RegistroEvento = ???;
+
+// 3. Crie a função exibirDetalhes aqui.
+// function exibirDetalhes(evento: RegistroEvento): void {
+//   // Lógica para desestruturar e imprimir
+// }
+
+// Chame a função para testar:
+// exibirDetalhes(eventoConferencia);
+// exibirDetalhes(eventoWorkshop);
+// exibirDetalhes(eventoCancelado);
+
+// 4. Descreva o teste de tipo inválido aqui:
+/* O que aconteceria se tentássemos: 
+const eventoInvalido: RegistroEvento = [123, true, "Palestra"];
+*/
