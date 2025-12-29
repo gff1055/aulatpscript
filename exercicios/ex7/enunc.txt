@@ -28,6 +28,32 @@ um array com um tipo incorreto ou número de elementos diferente à sua variáve
 
 
 
+*************************************************||**************************************************************
+
+
+
+O exercício a seguir ajudará você a entender como usar enums em TypeScript para definir um conjunto de constantes nomeadas, tornando seu código mais legível e menos propenso a erros de digitação.
+
+📝 O Cenário
+Você está desenvolvendo um Sistema de Gerenciamento de Tarefas simples. Cada tarefa pode ter um de três estados possíveis:
+
+Pendente (Pending)
+
+Em Andamento (InProgress)
+
+Concluída (Completed)
+
+🎯 O Objetivo
+Crie um enum para representar os possíveis estados de uma tarefa.
+
+Crie uma interface Tarefa que utilize esse enum.
+
+	Implemente uma função que aceite uma lista de tarefas e um estado, e retorne apenas as tarefas que correspondem a esse estado.
+
+Crie uma função para marcar uma tarefa como concluída (mudar o estado para Completed).
+
+
+
 
 
 

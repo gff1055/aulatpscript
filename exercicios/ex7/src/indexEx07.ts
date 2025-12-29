@@ -19,3 +19,7 @@ function isActive(varAux:boolean){
 }
 
 showDetails(varEventLog);
+
+
+
+
