@@ -22,17 +22,45 @@ Retorne uma string formatada exibindo o nome, o nível e o dano da magia do pers
 
 Passo 4: O Teste
 Tente instanciar um objeto que satisfaça o tipo PersonagemCompleto e passe-o para a função.*/
-function getCharacterSummary(pCharacter) {
-    let summary = "Nome: " + pCharacter.name + " || nivel: " + pCharacter.level + " || damage: " + pCharacter.damage;
+
+
+interface PersonalData{
+    name:string,
+    race:string
+}
+
+
+
+interface Statistics{
+    level:  number,
+    hp:     number
+}
+
+
+interface Skills{
+    magicType:  string,
+    damage:     number
+}
+
+
+type fullCharacter = PersonalData & Statistics & Skills;    // intersection
+
+
+// retorna os dados do personagem
+function getCharacterSummary(pCharacter: fullCharacter){
+    let summary:string = "Nome: "+pCharacter.name+" || nivel: "+pCharacter.level+" || damage: "+pCharacter.damage
     return summary;
 }
-const prota = getCharacterSummary({
+
+
+const prota:string = getCharacterSummary({
     name: "John",
     race: "WolfMan",
     hp: 200000,
     level: 150,
     magicType: "attack",
     damage: 150000,
-});
+})
+
+
 console.log(prota);
-export {};
