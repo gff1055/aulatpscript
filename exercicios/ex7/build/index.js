@@ -1,30 +1,71 @@
-/**
-
-Criar um Type Alias chamado FormaPagamento que seja uma união de três strings literais: "credito", "pix" e "boleto".
-
-Criar uma função chamada processarPagamento que aceite dois parâmetros:
-    valor: um número.
-    tipo: o union type FormaPagamento que você criou.
-
-Dentro da função, usa uma estrutura de controle (como switch ou if/else) para retornar uma mensagem específica para cada tipo:
-
-credito: "Pagamento de R$ [valor] processado. Parcelamento disponível."
-
-pix: "Pagamento de R$ [valor] processado. Desconto de 5% aplicado!"
-
-boleto: "Boleto de R$ [valor] gerado. Aguardando compensação."
- */
-function processPayment(pValue, pType) {
-    if (pType == "credito") {
-        return "Pagamento de R$" + pValue + " processado. Parcelamento disponível.";
+class Book {
+    title;
+    author;
+    status;
+    constructor(pTitle, pAuthor, pStatus) {
+        this.title = pTitle;
+        this.author = pAuthor;
+        this.status = pStatus;
     }
-    else if (pType == "pix") {
-        return "Pagamento de R$" + pValue + " processado. Desconto de 5% aplicado.";
+    changeStatus(pNewStatus) {
+        this.status = pNewStatus;
+        return 1;
     }
-    else
-        return "Boleto de R$" + pValue + " gerado. Aguardando compensação.";
 }
-console.log(processPayment(15, "credito"));
-console.log(processPayment(40, "pix"));
-console.log(processPayment(55, "boleto"));
+class Member {
+    id;
+    name;
+    contact;
+    constructor(pId, pName, pContact) {
+        this.id = pId;
+        this.name = pName;
+        this.contact = pContact;
+    }
+}
+/*let book1 = new Book("O ptk", "Desk Top", "available");
+
+if(book1.changeStatus("onLoan")){
+    console.log("o status do livro foi atualizado")
+};*/
+class Library {
+    shelf;
+    constructor(pShelf) {
+        this.shelf = pShelf;
+    }
+    addBook(pBook) {
+        this.shelf.push(pBook);
+    }
+    listAvailable() {
+        const availableBooks = [];
+        for (const book of this.shelf) {
+            if (book.status == "available")
+                availableBooks.push(book);
+        }
+        return availableBooks;
+    }
+}
+let library;
+let book1;
+let book2;
+let book3;
+let book4;
+let book5;
+let availableBooks;
+library = new Library([]);
+book1 = new Book("titulo1", "autor1", "available");
+book2 = new Book("titulo2", "autor2", "available");
+book3 = new Book("titulo3", "autor3", "available");
+book4 = new Book("titulo4", "autor2", "available");
+book5 = new Book("titulo5", "autor1", "available");
+library.addBook(book1);
+book1.changeStatus("onLoan");
+library.addBook(book2);
+library.addBook(book3);
+library.addBook(book4);
+library.addBook(book5);
+availableBooks = library.listAvailable();
+for (const book of availableBooks) {
+    console.log("Book");
+    console.log(book.title);
+}
 export {};
