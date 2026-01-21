@@ -1,71 +1,36 @@
 class Book {
     title;
     author;
-    status;
-    constructor(pTitle, pAuthor, pStatus) {
-        this.title = pTitle;
-        this.author = pAuthor;
-        this.status = pStatus;
-    }
-    changeStatus(pNewStatus) {
-        this.status = pNewStatus;
-        return 1;
+    isbn;
+    constructor(pTitle, pAuthor, pIsbn) {
+        this.title = pTitle,
+            this.author = pAuthor,
+            this.isbn = pIsbn;
     }
 }
-class Member {
-    id;
-    name;
-    contact;
-    constructor(pId, pName, pContact) {
-        this.id = pId;
-        this.name = pName;
-        this.contact = pContact;
-    }
+function isSearchFilter(pData) {
+    return (pData == "title") || (pData == "author") || (pData == "isbn");
 }
-/*let book1 = new Book("O ptk", "Desk Top", "available");
-
-if(book1.changeStatus("onLoan")){
-    console.log("o status do livro foi atualizado")
-};*/
 class Library {
     shelf;
     constructor(pShelf) {
         this.shelf = pShelf;
     }
-    addBook(pBook) {
-        this.shelf.push(pBook);
-    }
-    listAvailable() {
-        const availableBooks = [];
-        for (const book of this.shelf) {
-            if (book.status == "available")
-                availableBooks.push(book);
+    findBook(searchTerm) {
+        if (isSearchFilter(searchTerm)) {
+            console.log("busca por mais de um livro");
+            return [];
         }
-        return availableBooks;
+        else {
+            console.log("busca por um livro apenas");
+            return this.shelf[0];
+        }
     }
 }
-let library;
-let book1;
-let book2;
-let book3;
-let book4;
-let book5;
-let availableBooks;
-library = new Library([]);
-book1 = new Book("titulo1", "autor1", "available");
-book2 = new Book("titulo2", "autor2", "available");
-book3 = new Book("titulo3", "autor3", "available");
-book4 = new Book("titulo4", "autor2", "available");
-book5 = new Book("titulo5", "autor1", "available");
-library.addBook(book1);
-book1.changeStatus("onLoan");
-library.addBook(book2);
-library.addBook(book3);
-library.addBook(book4);
-library.addBook(book5);
-availableBooks = library.listAvailable();
-for (const book of availableBooks) {
-    console.log("Book");
-    console.log(book.title);
-}
+const book1 = new Book("titulo1", "autor1", "isbn1");
+const book2 = new Book("titulo2", "autor2", "isbn2");
+const book3 = new Book("titulo3", "autor3", "isbn3");
+const library = new Library([]);
+console.log(library.findBook("titulo1"));
+console.log(library.findBook("title"));
 export {};

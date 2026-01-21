@@ -1,105 +1,53 @@
 
-
-// status livro
-type bookStatus     = "available" | "onLoan" | "maintenance"
-
-// informações de contato
-type contactInfo = {
-    email   :string,
-    phone   :string
-}
-
-
-// Classe livro
 class Book{
-    title   :string         // titulo
-    author  :string         // autor
-    status  :bookStatus     // status do livro
-
-    constructor(pTitle: string, pAuthor: string, pStatus:bookStatus){
-        this.title = pTitle
-        this.author = pAuthor
-        this.status = pStatus
-    }
-
-    /* muda o status de um livro */
-    public changeStatus(pNewStatus: bookStatus){
-        this.status = pNewStatus
-        return 1;
+    title   :string
+    author  :string
+    isbn    :string
+    
+    constructor(pTitle: string, pAuthor: string, pIsbn: string){
+        this.title = pTitle,
+        this.author = pAuthor,
+        this.isbn = pIsbn
     }
 }
 
 
-// Classe membro
-class Member{
-    readonly id:number      // id do membro - apenas leitura
-    name:string             // nome do membro
-    contact:contactInfo     // informações de contato
 
-    constructor(pId: number, pName:string, pContact:contactInfo){
-        this.id = pId
-        this.name = pName
-        this.contact = pContact
-    }
+type SearchFilter = "title"|"author"|"isbn"
 
+function isSearchFilter(pData:string):boolean{
+    return(pData=="title")||(pData=="author")||(pData=="isbn")
 }
 
 
-// Classe biblioteca
+
 class Library{
-    private shelf: Book[]           // prateleira de livros
 
-    constructor(pShelf: Book[]){
+    shelf   :Book[]
+
+    constructor(pShelf:Book[]){
         this.shelf = pShelf
     }
 
-    // adiciona um livro à biblioteca
-    addBook(pBook:Book){
-        this.shelf.push(pBook)
-    }
-
-    // lista os livros disponiveis - retorna um array com os livros disponiveis
-    listAvailable(){
-        const availableBooks: Book[] = []
-        
-        // adiciona os livros disponiveis em um array proprio
-        for(const book of this.shelf){
-            if(book.status == "available")
-                availableBooks.push(book)
+    findBook(pIsbn:string):Book
+    findBook(pSearchFilter:SearchFilter):Book[]
+    findBook(searchTerm:string|SearchFilter):Book|Book[]{
+        if(isSearchFilter(searchTerm)){
+            console.log("busca por mais de um livro")
+            return [];
         }
-
-        return availableBooks
+        else{ 
+            console.log("busca por um livro apenas")
+            return this.shelf[0];
+        }
     }
+
 }
 
+const book1 = new Book("titulo1", "autor1", "isbn1")
+const book2 = new Book("titulo2", "autor2", "isbn2")
+const book3 = new Book("titulo3", "autor3", "isbn3")
+const library = new Library([])
 
-let library:Library = new Library([]);
-
-let book1:Book
-let book2:Book
-let book3:Book
-let book4:Book
-let book5:Book
-
-let availableBooks: Book[];
-
-book1 = new Book("titulo1", "autor1", "available");
-book2 = new Book("titulo2", "autor2", "available");
-book3 = new Book("titulo3", "autor3", "available");
-book4 = new Book("titulo4", "autor2", "available");
-book5 = new Book("titulo5", "autor1", "available");
-
-
-library.addBook(book1);
-book1.changeStatus("onLoan");
-library.addBook(book2);
-library.addBook(book3);
-library.addBook(book4);
-library.addBook(book5);
-
-availableBooks = library.listAvailable();
-
-for(const book of availableBooks){
-    console.log("Book");
-    console.log(book.title);
-}
+console.log(library.findBook("titulo1"))
+console.log(library.findBook("title"))
