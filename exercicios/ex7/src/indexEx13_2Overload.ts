@@ -1,8 +1,9 @@
 
+// Livro
 class Book{
-    title   :string
-    author  :string
-    isbn    :string
+    title   :string // Titulo
+    author  :string // autor
+    isbn    :string  
     
     constructor(pTitle: string, pAuthor: string, pIsbn: string){
         this.title = pTitle,

@@ -1,6 +1,9 @@
 
+
+// processador de pagamentos
 class PaymentProcessor{
 
+    // Pagamento das assinaturas: cartao, pix ou boleto
     subscriptionPayment(value: number, cardNumber: number):void
     subscriptionPayment(value: number, pix: string):void
     subscriptionPayment(value: number, boleto: string, discountRate: number):void
