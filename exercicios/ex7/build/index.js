@@ -1,36 +1,24 @@
-class Book {
-    title;
-    author;
-    isbn;
-    constructor(pTitle, pAuthor, pIsbn) {
-        this.title = pTitle,
-            this.author = pAuthor,
-            this.isbn = pIsbn;
+function updateLogistics(pDelivery) {
+    //desestruturando
+    const [orderId, statusOrder, destination] = pDelivery;
+    if (typeof destination == "string") {
+        return "Roteirizando até o endereço: " + destination;
+    }
+    else {
+        const [latitude, longitude] = destination;
+        return "Calculando rota para latitude: " + latitude + "longitude: " + longitude;
     }
 }
-function isSearchFilter(pData) {
-    return (pData == "title") || (pData == "author") || (pData == "isbn");
+function checkStatus(pDelivery) {
+    //desestruturando
+    const [orderId, statusOrder, destination] = pDelivery;
+    if (statusOrder == "pending")
+        return "Status pendente";
 }
-class Library {
-    shelf;
-    constructor(pShelf) {
-        this.shelf = pShelf;
-    }
-    findBook(searchTerm) {
-        if (isSearchFilter(searchTerm)) {
-            console.log("busca por mais de um livro");
-            return [];
-        }
-        else {
-            console.log("busca por um livro apenas");
-            return this.shelf[0];
-        }
-    }
-}
-const book1 = new Book("titulo1", "autor1", "isbn1");
-const book2 = new Book("titulo2", "autor2", "isbn2");
-const book3 = new Book("titulo3", "autor3", "isbn3");
-const library = new Library([]);
-console.log(library.findBook("titulo1"));
-console.log(library.findBook("title"));
+const delivery1 = [0, "pending", "Bairro 8"];
+console.log(checkStatus(delivery1));
+console.log(updateLogistics(delivery1));
+const delivery2 = [0, "pending", [160, 320]];
+console.log(checkStatus(delivery2));
+console.log(updateLogistics(delivery2));
 export {};

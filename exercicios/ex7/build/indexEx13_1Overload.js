@@ -1,3 +1,4 @@
+// processador de pagamentos
 class PaymentProcessor {
     subscriptionPayment(value, methodPayment, discountRate) {
         if (typeof (methodPayment) == 'number')
