@@ -13,8 +13,8 @@
 
 interface Repository<T>{    // interface para o repositorio de dados
     getAll():T[]
-//    getById(id: number):T|undefined
-//    save(item: T):void
+    getById(id: number):T|undefined
+    save(item: T):void
 }
 
 
@@ -22,14 +22,14 @@ interface Repository<T>{    // interface para o repositorio de dados
 // classe para armazenar dadps
 class MemoryStorage<T extends {id: number}> implements Repository<T>{
     
-    private data:T[] = [];  // array de dados
+    private data:T[] = [];  // array de dados armazenados
 
-    getAll(): T[] {         // retorna todos os daods
+    getAll(): T[] {         // retorna todos os dados armazenados
         return this.data
     }
 
 
-    add(item: T){           // adiciona um dado nos repositorios
+    save(item: T){           // adiciona um dado nos repositorios
         this.data.push(item);
     }
 
@@ -39,8 +39,13 @@ class MemoryStorage<T extends {id: number}> implements Repository<T>{
         foundedItem = this.getById(pId)
     }*/
 
-/*    getById(pId:number):T|undefined{
+
+
+    // faz a busca por um dado pelo ID. Retorna o respectivo dado ou 'undefined' se nao for encontrado
+    getById(pId:number):T|undefined{ 
         let vlData:T|undefined = undefined;
+
+        // percorre o array de dados para encontrar o ID
         for(const item of this.data){
             if(pId == item.id){
                 vlData = item;
@@ -48,12 +53,8 @@ class MemoryStorage<T extends {id: number}> implements Repository<T>{
             }
         }
         return undefined;
-    }*/
-    
-/*    save(pItem: T){
-        this.data.push(pItem)
     }
-*/
+    
 }
 
 type Data = {   // Type Alias para armazenar os dados
@@ -61,15 +62,31 @@ type Data = {   // Type Alias para armazenar os dados
     raw: number|string      // dado propriamente dito
 }
 
-// teste
+// teste = adidionando um dado
 
 let varMemoryStorage:MemoryStorage<Data> = new MemoryStorage<Data>()
 
 let data1:Data = {id:1618, raw:"dezesseis dezoito"}
 let data2:Data = {id:1619, raw:25}
 
-varMemoryStorage.add(data1);
-varMemoryStorage.add(data2);
+varMemoryStorage.save(data1);
+varMemoryStorage.save(data2);
 
 
 console.log(varMemoryStorage.getAll())
+
+
+// teste buscando um dado que existe
+
+let foundData = varMemoryStorage.getById(1618)
+
+if(!foundData) console.log("Não ha ocorrencias")
+else console.log(foundData)
+
+
+// teste buscando um dado que nao existe
+
+let foundData2 = varMemoryStorage.getById(9999)
+
+if(!foundData2) console.log("Não ha ocorrencias")
+else console.log(foundData)

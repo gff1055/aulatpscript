@@ -10,19 +10,46 @@
  * * DESAFIO: Evoluir de uma interface simples para métodos utilitários que
  * extraem dados baseados em chaves dinâmicas do tipo T.
  */
+// classe para armazenar dadps
 class MemoryStorage {
-    data = [];
+    data = []; // array de dados
     getAll() {
         return this.data;
     }
     add(item) {
         this.data.push(item);
     }
+    /*    update(pId:number,item:T){
+            let foundedItem:T|undefined
+            foundedItem = this.getById(pId)
+        }*/
+    getById(pId) {
+        let vlData = undefined;
+        for (const item of this.data) {
+            if (pId == item.id) {
+                vlData = item;
+                return vlData;
+            }
+        }
+        return undefined;
+    }
 }
+// teste = adidionando um dado
 let varMemoryStorage = new MemoryStorage();
 let data1 = { id: 1618, raw: "dezesseis dezoito" };
 let data2 = { id: 1619, raw: 25 };
 varMemoryStorage.add(data1);
 varMemoryStorage.add(data2);
 console.log(varMemoryStorage.getAll());
+// teste buscando um dado
+let foundData = varMemoryStorage.getById(1618);
+if (!foundData)
+    console.log("Não ha ocorrencias");
+else
+    console.log(foundData);
+let foundData2 = varMemoryStorage.getById(9999);
+if (!foundData2)
+    console.log("Não ha ocorrencias");
+else
+    console.log(foundData);
 export {};
