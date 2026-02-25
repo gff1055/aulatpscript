@@ -15,6 +15,7 @@ interface Repository<T>{    // interface para o repositorio de dados
     getAll():T[]
     getById(id: number):T|undefined
     save(item: T):void
+    
 }
 
 
