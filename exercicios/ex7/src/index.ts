@@ -15,6 +15,7 @@ interface Repository<T>{    // interface para o repositorio de dados
     getAll():T[]
     getById(id: number):T|undefined
     save(item: T):void
+    update(item: T):boolean|undefined;
     
 }
 
@@ -34,12 +35,20 @@ class MemoryStorage<T extends {id: number}> implements Repository<T>{
         this.data.push(item);
     }
 
+    update(pItem: T):boolean|undefined{
 
-/*    update(pId:number,item:T){
-        let foundedItem:T|undefined 
-        foundedItem = this.getById(pId)
-    }*/
+        if(!pItem.id) return undefined
+        
+        // percorre o array de dados para encontrar o ID
+        for(const item of this.data){
+            if(pItem.id == item.id){
+                item == pItem
+                return true;
+            }
+        }
 
+        return false        
+    }
 
 
     // faz a busca por um dado pelo ID. Retorna o respectivo dado ou 'undefined' se nao for encontrado
@@ -62,6 +71,7 @@ type Data = {   // Type Alias para armazenar os dados
     id:number;              // id do dado
     raw: number|string      // dado propriamente dito
 }
+
 
 // teste = adidionando um dado
 
