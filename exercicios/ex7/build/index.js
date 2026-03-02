@@ -12,19 +12,29 @@
  */
 // classe para armazenar dadps
 class MemoryStorage {
-    data = []; // array de dados
+    data = []; // array de dados armazenados
     getAll() {
         return this.data;
     }
-    add(item) {
+    save(item) {
         this.data.push(item);
     }
-    /*    update(pId:number,item:T){
-            let foundedItem:T|undefined
-            foundedItem = this.getById(pId)
-        }*/
+    update(pItem) {
+        if (!pItem.id)
+            return undefined;
+        // percorre o array de dados para encontrar o ID
+        for (const item of this.data) {
+            if (pItem.id == item.id) {
+                item == pItem;
+                return true;
+            }
+        }
+        return false;
+    }
+    // faz a busca por um dado pelo ID. Retorna o respectivo dado ou 'undefined' se nao for encontrado
     getById(pId) {
         let vlData = undefined;
+        // percorre o array de dados para encontrar o ID
         for (const item of this.data) {
             if (pId == item.id) {
                 vlData = item;
@@ -38,15 +48,20 @@ class MemoryStorage {
 let varMemoryStorage = new MemoryStorage();
 let data1 = { id: 1618, raw: "dezesseis dezoito" };
 let data2 = { id: 1619, raw: 25 };
-varMemoryStorage.add(data1);
-varMemoryStorage.add(data2);
+varMemoryStorage.save(data1);
+varMemoryStorage.save(data2);
 console.log(varMemoryStorage.getAll());
-// teste buscando um dado
+// teste buscando um dado que existe
 let foundData = varMemoryStorage.getById(1618);
 if (!foundData)
     console.log("Não ha ocorrencias");
-else
+else {
     console.log(foundData);
+    foundData.raw = 11121;
+    varMemoryStorage.update(foundData);
+}
+console.log(varMemoryStorage.getAll());
+// teste buscando um dado que nao existe
 let foundData2 = varMemoryStorage.getById(9999);
 if (!foundData2)
     console.log("Não ha ocorrencias");

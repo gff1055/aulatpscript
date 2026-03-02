@@ -87,17 +87,31 @@ varMemoryStorage.save(data2);
 console.log(varMemoryStorage.getAll())
 
 
-// teste buscando um dado que existe
+// teste buscando um dado que existe e atualizando 
 
 let foundData = varMemoryStorage.getById(1618)
 
+
+// Se o retorno for "undefined" exisbe mensagem de inexistencia
+// Senao o dado é exibido e atualizado
 if(!foundData) console.log("Não ha ocorrencias")
-else console.log(foundData)
+else{
+    console.log(foundData)
+    foundData.raw = 11121
+    varMemoryStorage.update(foundData)
+}
+
+// Verificando se o dado foi atualizado
+console.log(varMemoryStorage.getAll())
 
 
 // teste buscando um dado que nao existe
 
+
 let foundData2 = varMemoryStorage.getById(9999)
 
+
+// Se o retorno for "undefined" exisbe mensagem de inexistencia
+// Senao o dado é exibido e atualizado
 if(!foundData2) console.log("Não ha ocorrencias")
 else console.log(foundData)
