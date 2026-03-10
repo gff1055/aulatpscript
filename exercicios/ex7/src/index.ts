@@ -1,117 +1,96 @@
 /**
- * PROJETO: Sistema de Repositório Universal (The Generic Vault)
- * * OBJETIVO: Implementar um motor de gerenciamento de dados que utilize 
- * TypeScript Generics para garantir reuso de código e Type Safety.
- * * CONCEITOS PRATICADOS:
- * 1. Type Variables <T>: Criação de moldes flexíveis para interfaces e classes.
- * 2. Generic Constraints (extends): Restringir tipos para garantir propriedades obrigatórias (ex: ID).
- * 3. Keyof Operator: Manipulação de propriedades de objetos de forma segura.
- * 4. Data Mapping: Simulação de persistência de dados em memória.
- * * DESAFIO: Evoluir de uma interface simples para métodos utilitários que 
- * extraem dados baseados em chaves dinâmicas do tipo T.
+ * EXERCÍCIO: Sistema de Gestão de Oficina Estelar
+ * * OBJETIVO: 
+ * Praticar a tipagem avançada em TypeScript utilizando estruturas que 
+ * garantem a consistência dos dados e facilitam a manutenção do código.
+ * * TÓPICOS ABRANGIDOS:
+ * 1. Interface: Para definir o contrato e a estrutura dos objetos "Nave".
+ * 2. Enum: Para padronizar os estados de reparo, evitando erros de string literal.
+ * 3. Record: Para criar um dicionário de naves indexado por ID (registro),
+ * demonstrando como mapear chaves dinâmicas a tipos específicos.
+ * * CENÁRIO:
+ * Gerenciar uma frota de naves espaciais onde cada nave possui um registro
+ * único, modelo e um status de manutenção que pode ser atualizado.
  */
 
-interface Repository<T>{    // interface para o repositorio de dados
-    getAll():T[]
-    getById(id: number):T|undefined
-    save(item: T):void
-    update(item: T):boolean|undefined;
-    
+// estados de reparo
+enum RepairStatus{
+    Pending,
+    Inprogress,
+    Completed,
+    Canceled
+}
+
+// estrutura do objeto da nave
+interface Spaceship{
+    name    :string
+    model   :string
+    status  :RepairStatus
 }
 
 
+/** Criando record e populando com alguns dados de naves */
+let fleet:Record<string, Spaceship> = {
+    "1111": {
+        name: "nave1",
+        model: "1111",
+        status: RepairStatus.Pending
+    },
 
-// classe para armazenar dadps
-class MemoryStorage<T extends {id: number}> implements Repository<T>{
-    
-    private data:T[] = [];  // array de dados armazenados
+    "2222": {
+        name: "nave2",
+        model: "2222",
+        status: RepairStatus.Pending
+    },
 
-    getAll(): T[] {         // retorna todos os dados armazenados
-        return this.data
-    }
-
-
-    save(item: T){           // adiciona um dado nos repositorios
-        this.data.push(item);
-    }
-
-    update(pItem: T):boolean|undefined{
-
-        if(!pItem.id) return undefined
-        
-        // percorre o array de dados para encontrar o ID
-        for(const item of this.data){
-            if(pItem.id == item.id){
-                item == pItem
-                return true;
-            }
-        }
-
-        return false        
-    }
-
-
-    // faz a busca por um dado pelo ID. Retorna o respectivo dado ou 'undefined' se nao for encontrado
-    getById(pId:number):T|undefined{ 
-        let vlData:T|undefined = undefined;
-
-        // percorre o array de dados para encontrar o ID
-        for(const item of this.data){
-            if(pId == item.id){
-                vlData = item;
-                return vlData;
-            }
-        }
-        return undefined;
-    }
-    
-}
-
-type Data = {   // Type Alias para armazenar os dados
-    id:number;              // id do dado
-    raw: number|string      // dado propriamente dito
+    "3333": {
+        name: "nave3",
+        model: "3333",
+        status: RepairStatus.Pending
+    },
 }
 
 
-// teste = adidionando um dado
-
-let varMemoryStorage:MemoryStorage<Data> = new MemoryStorage<Data>()
-
-let data1:Data = {id:1618, raw:"dezesseis dezoito"}
-let data2:Data = {id:1619, raw:25}
-
-varMemoryStorage.save(data1);
-varMemoryStorage.save(data2);
-
-
-console.log(varMemoryStorage.getAll())
-
-
-// teste buscando um dado que existe e atualizando 
-
-let foundData = varMemoryStorage.getById(1618)
-
-
-// Se o retorno for "undefined" exisbe mensagem de inexistencia
-// Senao o dado é exibido e atualizado
-if(!foundData) console.log("Não ha ocorrencias")
-else{
-    console.log(foundData)
-    foundData.raw = 11121
-    varMemoryStorage.update(foundData)
+/** funcao para atualizar o status das naves
+ * - recebe o codigo da nave e o novo status
+ * - retorna TRUE se tiver achado, e UNDEFINED eno caso de nao achar ou se der erro.
+ * */
+function updateShipStatus(pId:string, newStatus:RepairStatus):Boolean|undefined{
+    if(fleet[pId]){
+        fleet[pId].status = newStatus
+        return true
+    }
+    return undefined
 }
 
-// Verificando se o dado foi atualizado
-console.log(varMemoryStorage.getAll())
+
+/** testando as funcoes */
+
+let status:Boolean|undefined;
+
+status = updateShipStatus("1111", RepairStatus.Canceled)    // recebe o resultado da atualizacao da nave
+
+/**
+ * Se a atualizacao for concluida, uma mensagem é enviada para a tela
+ * senao o aviso de erro interno é exibido
+ */
+if(status){
+    console.log("Status atualizado")
+    console.log(fleet["1111"])
+}
+
+else console.log("Erro interno")
 
 
-// teste buscando um dado que nao existe
 
 
-let foundData2 = varMemoryStorage.getById(9999)
+/** teste usando uma nave que nao existe */
 
+status = updateShipStatus("123456", RepairStatus.Canceled)
 
-// Se o retorno for "undefined" exisbe mensagem de inexistencia
-// Senao o dado é exibido e atualizado
-if(!foundData2) console.log("Não ha ocorrencias")
-else console.log(foundData)
+if(status){
+    console.log("Status atualizado")
+    console.log(fleet["1111"])
+}
+
+else console.log("Erro interno")
